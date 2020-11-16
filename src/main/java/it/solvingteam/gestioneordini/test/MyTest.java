@@ -61,8 +61,11 @@ public class MyTest {
 			articoloDaDb.setDescrizione("Pinze");
 			articoloServiceInstance.aggiorna(articoloDaDb);
 			*/
-			Articolo articoloDaDb = articoloServiceInstance.caricaSingoloElemento(1L);
-			Set<Articolo> articoliOrdinati= new HashSet<Articolo>();
+			Articolo articoloDaDb = articoloServiceInstance.caricaSingoloElemento(2L);
+			System.out.println(articoloDaDb.getDescrizione());
+			
+			articoloServiceInstance.rimuovi(articoloDaDb);
+			 /*Set<Articolo> articoliOrdinati= new HashSet<Articolo>();
 			articoliOrdinati.add(articoloDaDb);
 			
 			Ordine ordineInstance = new Ordine("Via dei Passi", "Elena");
@@ -70,9 +73,9 @@ public class MyTest {
 			ordineServiceInstance.inserisciNuovo(ordineInstance);
 			ordineServiceInstance.InserisciArticoloInOrdine(ordineInstance, articoloDaDb);
 			
+			*/
 			
-			
-			//QUERY1
+			 /*//QUERY1
 			System.out.println("Elenco ordini per categoria x:");
 			for (Ordine ordineItem: ordineServiceInstance.cercaOrdiniPerCategoria(1L)) {
 				System.out.println(ordineItem);			
@@ -84,7 +87,7 @@ public class MyTest {
 			}
 			//QUERY 3
 			System.out.println(articoloServiceInstance.totaleCostoArticoliCategoria(1L));
-			
+			*/
 
 		} catch (Exception e) {
 			e.printStackTrace();

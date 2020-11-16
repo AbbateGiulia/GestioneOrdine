@@ -92,9 +92,8 @@ public class OrdineServiceImpl implements OrdineService {
 			// eseguo quello che realmente devo fare
 			{
 				ordineDAO.insert(ordineInstance);
-			
 
-			entityManager.getTransaction().commit();
+				entityManager.getTransaction().commit();
 			}
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
@@ -145,28 +144,31 @@ public class OrdineServiceImpl implements OrdineService {
 			// uso l'injection per il dao
 			ordineDAO.setEntityManager(entityManager);
 			
-			if(ordineInstance.getArticoli().size()==0) {
-				System.out.println("l'ordine non esiste");
+			if(articoloInstance.getOrdine()!= null) {
+				System.out.println("articolo gia prenotato");
 				return;
-			}else {
-
-			// 'attacco' alla sessione di hibernate i due oggetti
-			// se articolo gia prensente riconosciuto e non inserito
-			ordineInstance = entityManager.merge(ordineInstance);
-			articoloInstance = entityManager.merge(articoloInstance);
-			
-			
-
-			articoloInstance.setOrdine(ordineInstance);
-			// aggiungo articolo al set articoli di categoria
-			ordineInstance.getArticoli().add(articoloInstance);
-			for (Articolo a : ordineInstance.getArticoli()) {
-				System.out.println("articolo aggiunto" + a.getDescrizione());
 			}
 
-			ordineInstance = entityManager.merge(ordineInstance);
+			if (ordineInstance.getArticoli().size() == 0) {
+				System.out.println("l'ordine non esiste");
+				return;
+			} else {
 
-			entityManager.getTransaction().commit();
+				// 'attacco' alla sessione di hibernate i due oggetti
+				// se articolo gia prensente riconosciuto e non inserito
+				ordineInstance = entityManager.merge(ordineInstance);
+				articoloInstance = entityManager.merge(articoloInstance);
+
+				articoloInstance.setOrdine(ordineInstance);
+				// aggiungo articolo al set articoli di categoria
+				ordineInstance.getArticoli().add(articoloInstance);
+				for (Articolo a : ordineInstance.getArticoli()) {
+					System.out.println("articolo aggiunto" + a.getDescrizione());
+				}
+
+				ordineInstance = entityManager.merge(ordineInstance);
+
+				entityManager.getTransaction().commit();
 			}
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
